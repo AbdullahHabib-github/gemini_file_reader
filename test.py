@@ -42,7 +42,12 @@ def process_audio(system_prompt, audio_file_path):
 # Streamlit App Structure
 st.title("Audio Prompt Processor")
 system_prompt = st.text_area("Enter your system prompt:", height=100)
-audio_file = st.file_uploader("Upload an audio file:")
+try:
+    audio_file = st.file_uploader("Upload an audio file:")
+except Exception as e:
+    st.write(f"Error while uploading the file: {e}")
+    st.stop()
+  
 
 if system_prompt and audio_file and st.button("Submit"):
     # Save the uploaded file locally
