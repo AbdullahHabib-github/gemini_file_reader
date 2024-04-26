@@ -5,19 +5,27 @@ import string
 from google.cloud import storage
 import vertexai
 from vertexai.generative_models import GenerativeModel, Part
+import json
 
+# credentials_file = None
+# # Iterate through all files to find the credentials file
+# for filename in os.listdir(os.getcwd()):
+#     # Check if the file ends with .json extension
+#     if filename.endswith('.json'):
+#         credentials_file = filename
 
-credentials_file = None
-# Iterate through all files to find the credentials file
-for filename in os.listdir(os.getcwd()):
-    # Check if the file ends with .json extension
-    if filename.endswith('.json'):
-        credentials_file = filename
+# if not  credentials_file:
+#     raise Exception ("Please download the credentials file from Cloud Console")
 
-if not  credentials_file:
-    raise Exception ("Please download the credentials file from Cloud Console")
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_file 
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_file 
+credentials = st.secrets["credentials"]
+
+with open("credentials.json", "w") as outfile:
+    # Serialize the dictionary as JSON and write to the file
+    json.dump(credentials, outfile, indent=2)
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "credentials.json" 
 
 
 def upload_blob(source_file_name, destination_blob_name, bucket_name="gemini_pdf_upload"):
@@ -77,8 +85,7 @@ def process_file(system_prompt, filename,file_extension):
     return response.text
 
 # Streamlit App Structure
-# st.title("File Prompt Processor")
-st.title("hihihoihor")
+st.title("File Prompt Processor")
 
 system_prompt = st.text_area("Enter your system prompt:", height=100)  # Multi-line input
 data_file = st.file_uploader("Upload a file:")
