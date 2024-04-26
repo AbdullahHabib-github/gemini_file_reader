@@ -77,7 +77,8 @@ def process_file(system_prompt, filename,file_extension):
     return response.text
 
 # Streamlit App Structure
-st.title("File Prompt Processor")
+# st.title("File Prompt Processor")
+st.title("hihihoihor")
 
 system_prompt = st.text_area("Enter your system prompt:", height=100)  # Multi-line input
 data_file = st.file_uploader("Upload a file:")
