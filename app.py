@@ -5,7 +5,7 @@ import string
 from google.cloud import storage
 import vertexai
 from vertexai.generative_models import GenerativeModel, Part
-import json
+import requests
 
 # credentials_file = None
 # # Iterate through all files to find the credentials file
@@ -21,11 +21,16 @@ import json
 
 credentials = st.secrets["credentials"]
 
-with open("credentials.json", "w") as outfile:
-    # Serialize the dictionary as JSON and write to the file
-    json.dump(credentials, outfile, indent=2)
+filename = os.path.basename(credentials)  # Extract filename from the URL
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "credentials.json" 
+response = requests.get(credentials)
+
+if response.status_code == 200:
+    # print(response.content)
+    with open(filename, 'wb') as f:
+        f.write(response.content)
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = filename 
 
 
 def upload_blob(source_file_name, destination_blob_name, bucket_name="gemini_pdf_upload"):
