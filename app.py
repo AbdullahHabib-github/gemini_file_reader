@@ -5,32 +5,18 @@ import string
 from google.cloud import storage
 import vertexai
 from vertexai.generative_models import GenerativeModel, Part
-import requests
 
-# credentials_file = None
-# # Iterate through all files to find the credentials file
-# for filename in os.listdir(os.getcwd()):
-#     # Check if the file ends with .json extension
-#     if filename.endswith('.json'):
-#         credentials_file = filename
+credentials_file = None
+# Iterate through all files to find the credentials file
+for filename in os.listdir(os.getcwd()):
+    # Check if the file ends with .json extension
+    if filename.endswith('.json'):
+        credentials_file = filename
 
-# if not  credentials_file:
-#     raise Exception ("Please download the credentials file from Cloud Console")
+if not  credentials_file:
+    raise Exception ("Please download the credentials file from Cloud Console")
 
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_file 
-
-credentials = st.secrets["credentials"]
-
-filename = os.path.basename(credentials)  # Extract filename from the URL
-
-response = requests.get(credentials)
-
-if response.status_code == 200:
-    # print(response.content)
-    with open(filename, 'wb') as f:
-        f.write(response.content)
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = filename 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_file 
 
 
 def upload_blob(source_file_name, destination_blob_name, bucket_name="gemini_pdf_upload"):

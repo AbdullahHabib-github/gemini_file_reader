@@ -4,5 +4,3 @@ test.py
 test3.py
 .env
 datafiles/
-Dockerfile
-.dockerignore
