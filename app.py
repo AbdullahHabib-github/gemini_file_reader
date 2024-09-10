@@ -18,7 +18,7 @@ import requests
 #     raise Exception ("Please download the credentials file from Cloud Console")
 
 
-credentials = st.secrets["credentials"]
+credentials = st.secrets["Credientials"]
 
 filename = "demos-435209-7e6ecff9511e.json"    # Extract filename from the URL
 
