@@ -19,7 +19,7 @@ if not  credentials_file:
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_file 
 
 
-def upload_blob(source_file_name, destination_blob_name, bucket_name="gemini_pdf_upload"):
+def upload_blob(source_file_name, destination_blob_name, bucket_name="gemini_test_bucker"):
     """Uploads a file to the bucket."""
 
     storage_client = storage.Client()
@@ -42,9 +42,9 @@ def upload_blob(source_file_name, destination_blob_name, bucket_name="gemini_pdf
 
 
 def process_file(system_prompt, filename,file_extension):
-    filename = "gs://gemini_pdf_upload/"+filename
+    filename = "gs://gemini_test_bucker/"+filename
 
-    project_id = "demos-403615"
+    project_id = "demos-435209"
 
     vertexai.init(project=project_id, location="us-central1")
 
@@ -67,7 +67,7 @@ def process_file(system_prompt, filename,file_extension):
         file = Part.from_uri(filename, mime_type="video/mp4")
 
     else:
-        return "{file_extension} fromat is not currently supported"
+        return f"{file_extension} fromat is not currently supported"
     
     contents = [file, system_prompt]
 
